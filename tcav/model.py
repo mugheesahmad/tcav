@@ -374,7 +374,30 @@ class InceptionV3Wrapper_public(PublicImageModelWrapper):
         scope='v3')
     self.model_name = 'InceptionV3_public'
 
+class InceptionV4Wrapper_public(PublicImageModelWrapper):
+  def __init__(self, sess, model_saved_path, labels_path):
+    self.image_value_range = (-1, 1)
+    image_shape_v4 = [299, 299, 3]
+    endpoints_v4 = dict(
+        input='Mul:0',
+        logit='softmax/logits:0',
+        prediction='softmax:0',
+        pre_avgpool='mixed_10/join:0',
+        logit_weight='softmax/weights:0',
+        logit_bias='softmax/biases:0',
+    )
 
+    self.sess = sess
+    super(InceptionV3Wrapper_public, self).__init__(
+        sess,
+        model_saved_path,
+        labels_path,
+        image_shape_v3,
+        endpoints_v3,
+        scope='v3')
+    self.model_name = 'InceptionV3_public'
+    
+    
 class MobilenetV2Wrapper_public(PublicImageModelWrapper):
 
   def __init__(self, sess, model_saved_path, labels_path):
